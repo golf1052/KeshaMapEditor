@@ -1,0 +1,82 @@
+﻿<Window x:Class="KeshaMapEditor.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Kesha Map Editor" Height="700" Width="1250">
+	<Window.Resources>
+		<DataTemplate x:Key="TileItemTemplate">
+			<Grid>
+				<StackPanel HorizontalAlignment="Left" Height="Auto" VerticalAlignment="Top" Width="Auto">
+					<StackPanel Height="Auto" Orientation="Horizontal">
+						<TextBlock TextWrapping="Wrap" Text="Texture" VerticalAlignment="Center"/>
+						<Image Width="50" Height="50" Source="{Binding Image}"/>
+					</StackPanel>
+					<StackPanel Height="Auto" Orientation="Horizontal">
+						<TextBlock TextWrapping="Wrap" Text="X Pos"/>
+						<TextBox TextWrapping="Wrap" Width="60" Text="{Binding X}"/>
+					</StackPanel>
+					<StackPanel Height="Auto" Orientation="Horizontal">
+						<TextBlock TextWrapping="Wrap" Text="Y Pos"/>
+						<TextBox TextWrapping="Wrap" Width="60" Text="{Binding Y}"/>
+					</StackPanel>
+					<CheckBox Content="Collision" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Collide}"/>
+				</StackPanel>
+			</Grid>
+		</DataTemplate>
+		<DataTemplate x:Key="RecentTilesTemplate">
+			<Grid>
+				<Grid.RowDefinitions>
+					<RowDefinition Height="Auto"/>
+					<RowDefinition Height="Auto"/>
+				</Grid.RowDefinitions>
+				<TextBlock HorizontalAlignment="Center" TextWrapping="Wrap" Text="{Binding Name}" VerticalAlignment="Top"/>
+				<Image HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Grid.Row="1" Source="{Binding Image}"/>
+			</Grid>
+		</DataTemplate>
+	</Window.Resources>
+    <Grid>
+    	<Grid.ColumnDefinitions>
+    		<ColumnDefinition/>
+    		<ColumnDefinition Width="Auto"/>
+    		<ColumnDefinition Width="Auto"/>
+    	</Grid.ColumnDefinitions>
+    	<Grid Background="#FFD1D1D1">
+    		<Grid.RowDefinitions>
+    			<RowDefinition Height="Auto"/>
+    			<RowDefinition/>
+    			<RowDefinition Height="Auto"/>
+    		</Grid.RowDefinitions>
+    		<StackPanel Orientation="Horizontal">
+    			<Button x:Name="addTileButton" Content="Add Tile" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="addTileButton_Click"/>
+    			<Button x:Name="deleteTileButton" Content="Delete Tile" HorizontalAlignment="Left" VerticalAlignment="Top" Width="75" Click="deleteTileButton_Click"/>
+    			<Button x:Name="refreshButton" Content="Refresh" Width="75" Click="refreshButton_Click"/>
+    			<Button x:Name="importButton" Content="Import" Width="75" Click="importButton_Click"/>
+    			<Button x:Name="exportButton" Content="Export" Width="75" Click="exportButton_Click"/>
+    		</StackPanel>
+    		<ScrollViewer x:Name="canvasScrollViewer" Grid.Row="1" HorizontalScrollBarVisibility="Visible">
+    			<Canvas x:Name="tileCanvas" MouseDown="tileCanvas_MouseDown" Background="White" Height="459.04" Width="601.6"/>
+    		</ScrollViewer>
+    		<StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Top">
+    			<TextBlock TextWrapping="Wrap" Text="Tile Size" VerticalAlignment="Center"/>
+    			<TextBox x:Name="tileSizeTextBox" Height="23" TextWrapping="Wrap" Width="120"/>
+    			<TextBlock TextWrapping="Wrap" Text="Tile Location" VerticalAlignment="Center"/>
+    			<Button x:Name="tileLocationButton" Content="None" Width="75" Click="tileLocationButton_Click"/>
+    			<TextBlock TextWrapping="Wrap" Text="Map Width" VerticalAlignment="Center"/>
+    			<TextBox x:Name="mapWidthTextBox" Height="23" TextWrapping="Wrap" Width="50"/>
+    			<TextBlock TextWrapping="Wrap" Text="Map Height" VerticalAlignment="Center"/>
+    			<TextBox x:Name="mapHeightTextBox" Height="23" TextWrapping="Wrap" Width="50"/>
+    		</StackPanel>
+    	</Grid>
+
+        <ListView x:Name="tileListView" HorizontalAlignment="Left" Width="125" Grid.Column="1" ItemTemplate="{DynamicResource TileItemTemplate}" Loaded="tileListView_Loaded" SelectionChanged="tileListView_SelectionChanged">
+        </ListView>
+        <Grid Grid.Column="2">
+        	<Grid.RowDefinitions>
+        		<RowDefinition/>
+        		<RowDefinition Height="Auto"/>
+        	</Grid.RowDefinitions>
+        	<ListView x:Name="recentTilesListView" HorizontalAlignment="Left" Width="100" ItemTemplate="{DynamicResource RecentTilesTemplate}" Loaded="recentTilesListView_Loaded" Margin="0"/>
+        	<Button x:Name="addTileButton1" Content="Add Tile" Margin="0" VerticalAlignment="Top" Grid.Row="1" Click="addTileButton1_Click"/>
+        </Grid>
+
+    </Grid>
+</Window>

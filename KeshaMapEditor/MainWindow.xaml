@@ -19,6 +19,7 @@
 						<TextBox TextWrapping="Wrap" Width="60" Text="{Binding Y}"/>
 					</StackPanel>
 					<CheckBox Content="Collision" HorizontalAlignment="Left" VerticalAlignment="Top" IsChecked="{Binding Collide}"/>
+					<TextBlock TextWrapping="Wrap" Text="{Binding LayerName}"/>
 				</StackPanel>
 			</Grid>
 		</DataTemplate>
@@ -32,10 +33,14 @@
 				<Image HorizontalAlignment="Left" Height="50" VerticalAlignment="Top" Width="50" Grid.Row="1" Source="{Binding Image}"/>
 			</Grid>
 		</DataTemplate>
+		<DataTemplate x:Key="LayerListTemplate">
+			<TextBlock TextWrapping="Wrap" Text="{Binding LayerName}"/>
+		</DataTemplate>
 	</Window.Resources>
     <Grid>
     	<Grid.ColumnDefinitions>
     		<ColumnDefinition/>
+    		<ColumnDefinition Width="Auto"/>
     		<ColumnDefinition Width="Auto"/>
     		<ColumnDefinition Width="Auto"/>
     	</Grid.ColumnDefinitions>
@@ -58,7 +63,7 @@
     		<StackPanel Grid.Row="2" Orientation="Horizontal" VerticalAlignment="Top">
     			<TextBlock TextWrapping="Wrap" Text="Tile Size" VerticalAlignment="Center"/>
     			<TextBox x:Name="tileSizeTextBox" Height="23" TextWrapping="Wrap" Width="120"/>
-    			<TextBlock TextWrapping="Wrap" Text="Tile Location" VerticalAlignment="Center"/>
+    			<TextBlock TextWrapping="Wrap" Text="Content Folder" VerticalAlignment="Center"/>
     			<Button x:Name="tileLocationButton" Content="None" Width="75" Click="tileLocationButton_Click"/>
     			<TextBlock TextWrapping="Wrap" Text="Map Width" VerticalAlignment="Center"/>
     			<TextBox x:Name="mapWidthTextBox" Height="23" TextWrapping="Wrap" Width="50"/>
@@ -66,16 +71,24 @@
     			<TextBox x:Name="mapHeightTextBox" Height="23" TextWrapping="Wrap" Width="50"/>
     		</StackPanel>
     	</Grid>
-
-        <ListView x:Name="tileListView" HorizontalAlignment="Left" Width="125" Grid.Column="1" ItemTemplate="{DynamicResource TileItemTemplate}" Loaded="tileListView_Loaded" SelectionChanged="tileListView_SelectionChanged">
-        </ListView>
+        <ListView x:Name="tileListView" HorizontalAlignment="Left" Width="125" Grid.Column="1" ItemTemplate="{DynamicResource TileItemTemplate}" Loaded="tileListView_Loaded" SelectionChanged="tileListView_SelectionChanged"/>
         <Grid Grid.Column="2">
         	<Grid.RowDefinitions>
         		<RowDefinition/>
         		<RowDefinition Height="Auto"/>
         	</Grid.RowDefinitions>
         	<ListView x:Name="recentTilesListView" HorizontalAlignment="Left" Width="100" ItemTemplate="{DynamicResource RecentTilesTemplate}" Loaded="recentTilesListView_Loaded" Margin="0"/>
-        	<Button x:Name="addTileButton1" Content="Add Tile" Margin="0" VerticalAlignment="Top" Grid.Row="1" Click="addTileButton1_Click"/>
+        	<Button x:Name="addTileButton1" Content="Add Tile" Margin="0" VerticalAlignment="Top" Grid.Row="1" Click="addTileButton1_Click" IsEnabled="False"/>
+        </Grid>
+        <Grid Width="100" Grid.Column="3" HorizontalAlignment="Left">
+        	<Grid.RowDefinitions>
+        		<RowDefinition/>
+        		<RowDefinition Height="Auto"/>
+        		<RowDefinition Height="Auto"/>
+        	</Grid.RowDefinitions>
+        	<ListBox x:Name="layerListBox" HorizontalAlignment="Left" Width="100" ItemTemplate="{DynamicResource LayerListTemplate}" Loaded="layerListBox_Loaded"/>
+        	<Button x:Name="addLayerButton" Content="Add Layer" VerticalAlignment="Top" Grid.Row="1" Click="addLayerButton_Click"/>
+        	<Button x:Name="deleteLayerButton" Content="Delete Layer" VerticalAlignment="Top" Grid.Row="2" Click="deleteLayerButton_Click"/>
         </Grid>
 
     </Grid>

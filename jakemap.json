@@ -1,0 +1,450 @@
+{
+  "tile_count": 63,
+  "tile_size": 64,
+  "map_width": 7,
+  "map_height": 6,
+  "layer_count": 2,
+  "tiles": [
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 2,
+      "pos_y": 0,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 3,
+      "pos_y": 0,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 4,
+      "pos_y": 0,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 2,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 1,
+      "pos_y": 2,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 0,
+      "pos_y": 2,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 3,
+      "pos_y": 2,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 4,
+      "pos_y": 2,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 5,
+      "pos_y": 2,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 0,
+      "pos_y": 3,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 0,
+      "pos_y": 4,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 4,
+      "pos_y": 4,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 5,
+      "pos_y": 5,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 1,
+      "pos_y": 0,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 2,
+      "pos_y": 2,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 5,
+      "pos_y": 3,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 5,
+      "pos_y": 4,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 4,
+      "pos_y": 5,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-270",
+      "pos_x": 5,
+      "pos_y": 0,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-180",
+      "pos_x": 5,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-180",
+      "pos_x": 1,
+      "pos_y": 3,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-270",
+      "pos_x": 1,
+      "pos_y": 4,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-0",
+      "pos_x": 2,
+      "pos_y": 4,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 2,
+      "pos_y": 3,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-180",
+      "pos_x": 3,
+      "pos_y": 3,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-270",
+      "pos_x": 0,
+      "pos_y": 0,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-180",
+      "pos_x": 0,
+      "pos_y": 5,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-180",
+      "pos_x": 1,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-270",
+      "pos_x": 0,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-180",
+      "pos_x": 4,
+      "pos_y": 3,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 4,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-270",
+      "pos_x": 3,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 3,
+      "pos_y": 5,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 3,
+      "pos_y": 4,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-180",
+      "pos_x": 2,
+      "pos_y": 5,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Flooring\\Carpet\\carpet-90",
+      "pos_x": 1,
+      "pos_y": 5,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\Walls\\wall-left",
+      "pos_x": 0,
+      "pos_y": 1,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-left",
+      "pos_x": 0,
+      "pos_y": 2,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-left",
+      "pos_x": 0,
+      "pos_y": 3,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-left",
+      "pos_x": 0,
+      "pos_y": 4,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-top",
+      "pos_x": 1,
+      "pos_y": 0,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-top",
+      "pos_x": 2,
+      "pos_y": 0,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-top",
+      "pos_x": 3,
+      "pos_y": 0,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-top",
+      "pos_x": 4,
+      "pos_y": 0,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-right",
+      "pos_x": 5,
+      "pos_y": 1,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-right",
+      "pos_x": 5,
+      "pos_y": 2,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-right",
+      "pos_x": 5,
+      "pos_y": 3,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-right",
+      "pos_x": 5,
+      "pos_y": 4,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-bot",
+      "pos_x": 1,
+      "pos_y": 5,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-bot",
+      "pos_x": 2,
+      "pos_y": 5,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-bot",
+      "pos_x": 3,
+      "pos_y": 5,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\Walls\\wall-bot",
+      "pos_x": 4,
+      "pos_y": 5,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\grass",
+      "pos_x": 6,
+      "pos_y": 0,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\grass",
+      "pos_x": 6,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\grass",
+      "pos_x": 6,
+      "pos_y": 2,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\grass",
+      "pos_x": 6,
+      "pos_y": 3,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\grass",
+      "pos_x": 6,
+      "pos_y": 4,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\grass",
+      "pos_x": 6,
+      "pos_y": 5,
+      "collide": false,
+      "layer": 0
+    },
+    {
+      "texture": "game\\crib\\crib-I",
+      "pos_x": 2,
+      "pos_y": 1,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\crib\\crib-III",
+      "pos_x": 1,
+      "pos_y": 2,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\crib\\crib-II",
+      "pos_x": 2,
+      "pos_y": 2,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\crib\\crib-IV",
+      "pos_x": 1,
+      "pos_y": 1,
+      "collide": true,
+      "layer": 1
+    },
+    {
+      "texture": "game\\empty-nightstand",
+      "pos_x": 4,
+      "pos_y": 1,
+      "collide": false,
+      "layer": 1
+    }
+  ]
+}

@@ -34,8 +34,11 @@ namespace KeshaMapEditor
         bool selectingTile = false;
         int mapWidth = 0;
         int mapHeight = 0;
+        Uri rootDirectory;
 
         ObservableCollection<RecentTileTemplateBinding> recentTiles = new ObservableCollection<RecentTileTemplateBinding>();
+
+        ObservableCollection<LayerListViewBinding> layersCollection = new ObservableCollection<LayerListViewBinding>();
 
         public MainWindow()
         {
@@ -64,20 +67,29 @@ namespace KeshaMapEditor
             if (tileSizeTextBox.Text == "")
             {
                 MessageBox.Show("You need to enter a tile size first");
-                return;
             }
-            bool? result = openFileDialog.ShowDialog();
-
-            if (result == true)
+            else
             {
-                if (int.TryParse(tileSizeTextBox.Text, out tileSize))
+                if (layersCollection.Count == 0)
                 {
-                    string filename = openFileDialog.FileName;
-                    recentTiles.Add(new RecentTileTemplateBinding(filename));
+                    MessageBox.Show("You need to have at least 1 layer");
                 }
-                else
-                {
-                    MessageBox.Show("The Tize size needs to be a number");
+                else {
+                    bool? result = openFileDialog.ShowDialog();
+
+                    if (result == true)
+                    {
+                        if (int.TryParse(tileSizeTextBox.Text, out tileSize))
+                        {
+                            string filename = openFileDialog.FileName;
+                            string tempFilename = filename.Remove(0, rootDirectory.OriginalString.Length);
+                            recentTiles.Add(new RecentTileTemplateBinding(filename, tempFilename));
+                        }
+                        else
+                        {
+                            MessageBox.Show("The Tile size needs to be a number");
+                        }
+                    }
                 }
             }
         }
@@ -127,16 +139,22 @@ namespace KeshaMapEditor
                 JObject mapO = new JObject();
                 mapO["tile_count"] = tilesCollection.Count;
                 mapO["tile_size"] = tileSize;
+                mapO["map_width"] = mapWidth;
+                mapO["map_height"] = mapHeight;
+                mapO["layer_count"] = layersCollection.Count;
                 JArray tilesA = new JArray();
                 foreach (TileTemplateBinding tile in tilesCollection)
                 {
                     JObject tileO = new JObject();
-                    string[] splitPath = tile.Image.ToString().Split('/');
-                    string[] secondSplit = splitPath[splitPath.Length - 1].Split('.');
-                    tileO["texture"] = secondSplit[0];
+                    string tempFilename = tile.Image.OriginalString.Remove(0, rootDirectory.OriginalString.Length);
+                    string textureName = tempFilename.Remove(tempFilename.Length - 4);
+                    //string[] splitPath = tile.Image.ToString().Split('/');
+                    //string[] secondSplit = splitPath[splitPath.Length - 1].Split('.');
+                    tileO["texture"] = textureName;
                     tileO["pos_x"] = tile.X;
                     tileO["pos_y"] = tile.Y;
                     tileO["collide"] = tile.Collide;
+                    tileO["layer"] = tile.layer;
                     tilesA.Add(tileO);
                 }
                 mapO["tiles"] = tilesA;
@@ -154,6 +172,7 @@ namespace KeshaMapEditor
             bool? result = openFileDialog.ShowDialog();
             if (result == true)
             {
+                layersCollection.Clear();
                 tilesCollection.Clear();
                 tiles = new List<TileImage>();
                 tileCanvas.Children.Clear();
@@ -162,12 +181,21 @@ namespace KeshaMapEditor
                 JObject mapO = JObject.Parse(streamReader.ReadToEnd());
                 tileSize = (int)mapO["tile_size"];
                 tileSizeTextBox.Text = ((int)mapO["tile_size"]).ToString();
+                mapWidth = (int)mapO["map_width"];
+                mapHeight = (int)mapO["map_height"];
+                mapWidthTextBox.Text = mapWidth.ToString();
+                mapHeightTextBox.Text = mapHeight.ToString();
+                refreshButton_Click(null, null);
+                for (int i = 0; i < (int)mapO["layer_count"]; i++)
+                {
+                    layersCollection.Add(new LayerListViewBinding("Layer " + i.ToString(), i));
+                }
                 JArray tilesA = (JArray)mapO["tiles"];
                 foreach (JObject o in tilesA)
                 {
-                    string filename = tileLocationButton.Content.ToString();
+                    string filename = rootDirectory.OriginalString;
                     filename += (string)o["texture"] + ".png";
-                    tilesCollection.Add(new TileTemplateBinding(filename, tileSize, (int)o["pos_x"], (int)o["pos_y"], (bool)o["collide"]));
+                    tilesCollection.Add(new TileTemplateBinding(filename, tileSize, (int)o["pos_x"], (int)o["pos_y"], (bool)o["collide"], (int)o["layer"]));
                     Image tempImage = new Image();
                     tempImage.Width = tileSize;
                     tempImage.Height = tileSize;
@@ -177,7 +205,7 @@ namespace KeshaMapEditor
                     tempBitmap.DecodePixelWidth = tileSize;
                     tempBitmap.EndInit();
                     tempImage.Source = tempBitmap;
-                    tiles.Add(new TileImage(tempImage, tilesCollection[tilesCollection.Count - 1].internalX, tilesCollection[tilesCollection.Count - 1].internalY));
+                    tiles.Add(new TileImage(tempImage, tilesCollection[tilesCollection.Count - 1].internalX, tilesCollection[tilesCollection.Count - 1].internalY, tilesCollection[tilesCollection.Count - 1].layer));
                     Canvas.SetTop(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].y);
                     Canvas.SetLeft(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].x);
                     tileCanvas.Children.Add(tiles[tiles.Count - 1].image);
@@ -207,7 +235,7 @@ namespace KeshaMapEditor
                     tempBitmap.DecodePixelWidth = tileSize;
                     tempBitmap.EndInit();
                     tempImage.Source = tempBitmap;
-                    tiles.Add(new TileImage(tempImage, tilesCollection[tilesCollection.Count - 1].internalX, tilesCollection[tilesCollection.Count - 1].internalY));
+                    tiles.Add(new TileImage(tempImage, tilesCollection[tilesCollection.Count - 1].internalX, tilesCollection[tilesCollection.Count - 1].internalY, 0));
                     Canvas.SetTop(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].y);
                     Canvas.SetLeft(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].x);
                     tileCanvas.Children.Add(tiles[tiles.Count - 1].image);
@@ -232,6 +260,7 @@ namespace KeshaMapEditor
                 string[] splitString = tempStr.Split('\\');
                 tileLocationButton.Content = tempStr.Remove(tempStr.Length - 1 - splitString[splitString.Length - 1].Length);
                 tileLocationButton.Content += "\\";
+                rootDirectory = new Uri(tileLocationButton.Content.ToString());
             }
         }
 
@@ -258,51 +287,57 @@ namespace KeshaMapEditor
             {
                 if (e.LeftButton == MouseButtonState.Pressed)
                 {
-                    RecentTileTemplateBinding selectedTile = (RecentTileTemplateBinding)recentTilesListView.SelectedItem;
-                    if (selectedTile != null)
+                    if (layerListBox.SelectedIndex != -1)
                     {
-                        if (TileCollision((int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize))
+                        RecentTileTemplateBinding selectedTile = (RecentTileTemplateBinding)recentTilesListView.SelectedItem;
+                        if (selectedTile != null)
                         {
-                            int tci = GetTileIndexByPosition((int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize);
-                            deletingTile = true;
-                            tileCanvas.Children.RemoveAt(tci);
-                            tiles.RemoveAt(tci);
-                            tilesCollection.RemoveAt(tci);
+                            if (TileCollision((int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize, layerListBox.SelectedIndex))
+                            {
+                                int tci = GetTileIndexByPosition((int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize, layerListBox.SelectedIndex);
+                                deletingTile = true;
+                                tileCanvas.Children.RemoveAt(tci);
+                                tiles.RemoveAt(tci);
+                                tilesCollection.RemoveAt(tci);
+                            }
+                            tilesCollection.Add(new TileTemplateBinding(selectedTile.Image.OriginalString, tileSize, (int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize, false, layerListBox.SelectedIndex));
+                            Image tempImage = new Image();
+                            tempImage.Width = tileSize;
+                            tempImage.Height = tileSize;
+                            BitmapImage tempBitmap = new BitmapImage();
+                            tempBitmap.BeginInit();
+                            tempBitmap.UriSource = tilesCollection[tilesCollection.Count - 1].Image;
+                            tempBitmap.DecodePixelWidth = tileSize;
+                            tempBitmap.EndInit();
+                            tempImage.Source = tempBitmap;
+                            tiles.Add(new TileImage(tempImage, tilesCollection[tilesCollection.Count - 1].internalX, tilesCollection[tilesCollection.Count - 1].internalY, layerListBox.SelectedIndex));
+                            Canvas.SetTop(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].y);
+                            Canvas.SetLeft(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].x);
+                            tileCanvas.Children.Add(tiles[tiles.Count - 1].image);
                         }
-                        tilesCollection.Add(new TileTemplateBinding(selectedTile.Image.OriginalString, tileSize, (int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize, false));
-                        Image tempImage = new Image();
-                        tempImage.Width = tileSize;
-                        tempImage.Height = tileSize;
-                        BitmapImage tempBitmap = new BitmapImage();
-                        tempBitmap.BeginInit();
-                        tempBitmap.UriSource = tilesCollection[tilesCollection.Count - 1].Image;
-                        tempBitmap.DecodePixelWidth = tileSize;
-                        tempBitmap.EndInit();
-                        tempImage.Source = tempBitmap;
-                        tiles.Add(new TileImage(tempImage, tilesCollection[tilesCollection.Count - 1].internalX, tilesCollection[tilesCollection.Count - 1].internalY));
-                        Canvas.SetTop(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].y);
-                        Canvas.SetLeft(tiles[tiles.Count - 1].image, tiles[tiles.Count - 1].x);
-                        tileCanvas.Children.Add(tiles[tiles.Count - 1].image);
                     }
                 }
                 else if (e.RightButton == MouseButtonState.Pressed)
                 {
-                    selectingTile = true;
-                    //tileCanvas.Children.Remove(selectionTool);
-                    //Canvas.SetTop(selectionTool, ((int)e.GetPosition(tileCanvas).Y / tileSize) * tileSize  + tileSize / 2 - 17);
-                    //Canvas.SetLeft(selectionTool, ((int)e.GetPosition(tileCanvas).X / tileSize) * tileSize + tileSize / 2 - 17);
-                    //tileCanvas.Children.Add(selectionTool);
-                    tileListView.SelectedIndex = GetTileIndexByPosition((int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize);
-                    tileListView.ScrollIntoView(tileListView.SelectedItem);
+                    if (layerListBox.SelectedIndex != -1)
+                    {
+                        selectingTile = true;
+                        //tileCanvas.Children.Remove(selectionTool);
+                        //Canvas.SetTop(selectionTool, ((int)e.GetPosition(tileCanvas).Y / tileSize) * tileSize  + tileSize / 2 - 17);
+                        //Canvas.SetLeft(selectionTool, ((int)e.GetPosition(tileCanvas).X / tileSize) * tileSize + tileSize / 2 - 17);
+                        //tileCanvas.Children.Add(selectionTool);
+                        tileListView.SelectedIndex = GetTileIndexByPosition((int)e.GetPosition(tileCanvas).X / tileSize, (int)e.GetPosition(tileCanvas).Y / tileSize, layerListBox.SelectedIndex);
+                        tileListView.ScrollIntoView(tileListView.SelectedItem);
+                    }
                 }
             }
         }
 
-        bool TileCollision(int x, int y)
+        bool TileCollision(int x, int y, int layer)
         {
             foreach (TileTemplateBinding tile in tilesCollection)
             {
-                if (tile.X == x && tile.Y == y)
+                if (tile.X == x && tile.Y == y && tile.layer == layer)
                 {
                     return true;
                 }
@@ -311,17 +346,53 @@ namespace KeshaMapEditor
             return false;
         }
 
-        int GetTileIndexByPosition(int x, int y)
+        int GetTileIndexByPosition(int x, int y, int layer)
         {
             for (int i = 0; i < tilesCollection.Count; i++)
             {
-                if (tilesCollection[i].X == x && tilesCollection[i].Y == y)
+                if (tilesCollection[i].X == x && tilesCollection[i].Y == y && tilesCollection[i].layer == layer)
                 {
                     return i;
                 }
             }
 
             return -1;
+        }
+
+        private void addLayerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (layersCollection.Count == 0)
+            {
+                layersCollection.Add(new LayerListViewBinding("Layer 0", 0));
+            }
+            else
+            {
+                layersCollection.Add(new LayerListViewBinding("Layer " + layersCollection.Count.ToString(), layersCollection.Count));
+            }
+        }
+
+        private void deleteLayerButton_Click(object sender, RoutedEventArgs e)
+        {
+            if (layersCollection.Count > 0)
+            {
+                deletingTile = true;
+                for (int i = 0; i < tilesCollection.Count; i++)
+                {
+                    if (tilesCollection[i].layer == layersCollection.Count - 1)
+                    {
+                        tileCanvas.Children.RemoveAt(i);
+                        tiles.RemoveAt(i);
+                        tilesCollection.RemoveAt(i);
+                        i--;
+                    }
+                }
+                layersCollection.RemoveAt(layersCollection.Count - 1);
+            }
+        }
+
+        private void layerListBox_Loaded(object sender, RoutedEventArgs e)
+        {
+            layerListBox.ItemsSource = layersCollection;
         }
     }
 }

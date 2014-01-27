@@ -12,12 +12,14 @@ namespace KeshaMapEditor
         public Image image;
         public int x;
         public int y;
+        public int layer;
 
-        public TileImage(Image image, int x, int y)
+        public TileImage(Image image, int x, int y, int layer)
         {
             this.image = image;
             this.x = x;
             this.y = y;
+            this.layer = layer;
         }
     }
 }

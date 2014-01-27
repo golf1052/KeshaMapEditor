@@ -11,12 +11,12 @@ namespace KeshaMapEditor
         public string Name { get; set; }
         public Uri Image { get; set; }
 
-        public RecentTileTemplateBinding(string filename)
+        public RecentTileTemplateBinding(string filename, string displayName)
         {
             this.Image = new Uri(filename);
-            string[] splitPath = Image.ToString().Split('/');
-            string[] secondSplit = splitPath[splitPath.Length - 1].Split('.');
-            this.Name = secondSplit[0];
+            //string[] splitPath = Image.ToString().Split('/');
+            //string[] secondSplit = splitPath[splitPath.Length - 1].Split('.');
+            this.Name = displayName;
         }
     }
 }

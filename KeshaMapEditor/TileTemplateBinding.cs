@@ -12,10 +12,12 @@ namespace KeshaMapEditor
         public int X { get; set; }
         public int Y { get; set; }
         public bool Collide { get; set; }
+        public string LayerName { get; set; }
 
         public int imageSize;
         public int internalX;
         public int internalY;
+        public int layer;
 
         public TileTemplateBinding(string image, int imageSize)
         {
@@ -26,9 +28,11 @@ namespace KeshaMapEditor
             this.imageSize = imageSize;
             this.internalX = 0;
             this.internalY = 0;
+            this.LayerName = "Layer 0";
+            this.layer = 0;
         }
 
-        public TileTemplateBinding(string image, int imageSize, int x, int y, bool collide)
+        public TileTemplateBinding(string image, int imageSize, int x, int y, bool collide, int layer)
         {
             this.Image = new Uri(image);
             this.X = x;
@@ -37,6 +41,8 @@ namespace KeshaMapEditor
             this.imageSize = imageSize;
             this.internalX = X * imageSize;
             this.internalY = Y * imageSize;
+            this.LayerName = "Layer " + layer.ToString();
+            this.layer = layer;
         }
 
         public void Refresh()
